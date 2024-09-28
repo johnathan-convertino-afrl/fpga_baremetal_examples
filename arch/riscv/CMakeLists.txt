@@ -6,7 +6,8 @@
 cmake_minimum_required(VERSION 3.14)
 
 set(BARE_METAL_BOOT
-  crt0.S
+  startup.c
+  base.h
 )
 
 add_library(bare_metal_boot OBJECT ${BARE_METAL_BOOT})

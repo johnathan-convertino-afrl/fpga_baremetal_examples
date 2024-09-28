@@ -183,7 +183,7 @@ struct s_gpio
   * @return s_gpio is a struct with a pointer to the
   * device memory address
   *************************************************/
-inline struct s_gpio *initGpio(uint32_t memory_address);
+struct s_gpio *initGpio(uint32_t memory_address);
 
 #endif
 

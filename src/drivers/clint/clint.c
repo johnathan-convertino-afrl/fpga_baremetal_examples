@@ -1,8 +1,7 @@
 /***************************************************************************//**
-  * @file     gpio.c
-  * @brief    Xilinx AXI GPIO driver
-  * @details  Baremetal C driver targeting Xilinx based GPIO cores.
-  *           Written with riscv or arm irq structure in mind.
+  * @file     clint.h
+  * @brief    RISCV CLINT driver
+  * @details  Baremetal C driver RISCV CLINT.
   * @author   Johnathan Convertino (johnathan.convertino.1@us.af.mil)
   * @date     08/26/2024
   * @version
@@ -33,21 +32,13 @@
 
 #include <stdlib.h>
 
-#include "gpio.h"
+#include "clint.h"
 
-// Initializes gpio structure and device
-// to defaults, no IRQ, 0 output data, ALL outputs.
-inline struct s_gpio *initGpio(uint32_t memory_address)
+// Initializes clint structure and device
+// to defaults, no IRQ.
+inline struct s_clint *initClint(uint32_t memory_address)
 {
-  struct s_gpio *p_temp = (struct s_gpio *)memory_address;
-
-  p_temp->data1 = 0;
-  p_temp->tri1  = 0;
-  p_temp->data2 = 0;
-  p_temp->tri2  = 0;
-  p_temp->gier.reg  = 0;
-  p_temp->ier.reg   = 0;
-  p_temp->isr.reg   = 0;
+  struct s_clint *p_temp = (struct s_clint *)memory_address;
 
   return p_temp;
 }

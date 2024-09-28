@@ -36,7 +36,7 @@
 #include "tft_vga.h"
 
 // Initializes tft_vga structure and device
-inline struct s_tft_vga *initTFTvga(uint32_t memory_address)
+struct s_tft_vga *initTFTvga(uint32_t memory_address)
 {
   struct s_tft_vga *p_temp = (struct s_uart *)memory_address;
 

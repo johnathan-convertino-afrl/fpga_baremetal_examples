@@ -1,7 +1,7 @@
 /***************************************************************************//**
-  * @file     gpio.c
-  * @brief    Xilinx AXI GPIO driver
-  * @details  Baremetal C driver targeting Xilinx based GPIO cores.
+  * @file     eth_lite.c
+  * @brief    Xilinx AXI ETH_LITE driver
+  * @details  Baremetal C driver targeting Xilinx based ETH_LITE cores.
   *           Written with riscv or arm irq structure in mind.
   * @author   Johnathan Convertino (johnathan.convertino.1@us.af.mil)
   * @date     08/26/2024
@@ -33,11 +33,11 @@
 
 #include <stdlib.h>
 
-#include "gpio.h"
+#include "eth_lite.h"
 
 // Initializes gpio structure and device
 // to defaults, no IRQ, 0 output data, ALL outputs.
-inline struct s_gpio *initGpio(uint32_t memory_address)
+struct s_gpio *initGpio(uint32_t memory_address)
 {
   struct s_gpio *p_temp = (struct s_gpio *)memory_address;
 

@@ -1,8 +1,7 @@
 /***************************************************************************//**
-  * @file     gpio.h
-  * @brief    Xilinx AXI GPIO driver
-  * @details  Baremetal C driver targeting Xilinx based GPIO cores.
-  *           Written with riscv or arm irq structure in mind.
+  * @file     clint.h
+  * @brief    RISCV CLINT driver
+  * @details  Baremetal C driver RISCV CLINT.
   * @author   Johnathan Convertino (johnathan.convertino.1@us.af.mil)
   * @date     08/26/2024
   * @version
@@ -31,146 +30,59 @@
   * IN THE SOFTWARE.
   *****************************************************************************/
 
-#ifndef __GPIO_DRV_H
-#define __GPIO_DRV_H
+#ifndef __CLINT_DRV_H
+#define __CLINT_DRV_H
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 /**
- * @struct s_gpio
- * @brief A struct to use for various gpio devices. Will get memory mapped by init.
+ * @struct s_clint
+ * @brief A struct to use for various clint devices. Will get memory mapped by init.
  */
-struct s_gpio
+struct s_clint
 {
   /**
-  * @var s_gpio::data1
-  * Channel 1 data register
+  * @var s_clint::msip
+  * MSIP for hart 0
   */
-  volatile uint32_t data1;
+  volatile uint32_t msip;
   /**
-  * @var s_gpio::tri1
-  * Channel 1 tristate register
+  * @var s_clint::reserved1
+  * unused regs
   */
-  volatile uint32_t tri1;
+  volatile uint32_t reserved1[16380];
   /**
-  * @var s_gpio::data2
-  * Channel 2 data register
+  * @var s_clint::mtimecmp0
+  * timer lsw
   */
-  volatile uint32_t data2;
+  volatile uint32_t mtimecmp0;
   /**
-  * @var s_gpio::tri2
-  * Channel 2 tristate register
+  * @var s_clint::mtimecmp1
+  * timer msw
   */
-  volatile uint32_t tri2;
-
+  volatile uint32_t mtimecmp1;
   /**
-  * @union u_gier
-  * @brief Register gier with packed struct to access individual bits
+  * @var s_clint::reserved2
+  * unused regs
   */
-  union u_gier
-  {
-    /**
-    * @var s_gpio:u_gier:reg
-    * Global interupt register
-    */
-    volatile uint32_t reg;
-
-    /**
-    * @union s_gier_bits
-    * @brief packed struct with bits.
-    */
-    struct s_gier_bits
-    {
-      /**
-      * @var s_gpio:u_gier:s_gier_bits:reserver
-      * Unused bits
-      */
-      volatile uint32_t reserved:31;
-      /**
-      * @var s_gpio:u_gier:s_gier_bits:gie
-      * Global interupt enable bit
-      */
-      volatile uint8_t gie:1;
-    } bits;
-  } gier;
-
+  volatile uint32_t reserved2[32752];
   /**
-  * @union u_ier
-  * @brief Register ier with packed struct to access individual bits
+  * @var s_clint::mtime0
+  * time lsw
   */
-  union u_ier
-  {
-    /**
-    * @var s_gpio:u_ier:reg
-    * Global interupt register
-    */
-    volatile uint32_t reg;
-
-    /**
-    * @union s_ier_bits
-    * @brief packed struct with bits.
-    */
-    struct s_ier_bits
-    {
-      /**
-      * @var s_gpio:u_ier:s_ier_bits:ch1_ena
-      * Channel 1 interupt enable.
-      */
-      volatile uint8_t ch1_ena:1;
-
-      /**
-      * @var s_gpio:u_ier:s_ier_bits:ch2_ena
-      * Channel 2 interupt enable.
-      */
-      volatile uint8_t ch2_ena:1;
-
-      /**
-      * @var s_gpio:u_ier:s_ier_bits:reserved
-      * Unused bits
-      */
-      volatile uint32_t reserved:30;
-    } bits;
-  } ier;
-
+  volatile uint32_t mtime0;
   /**
-  * @union u_isr
-  * @brief Register isr with packed struct to access individual bits
+  * @var s_clint::mtime1
+  * time msw
   */
-  union u_isr
-  {
-    /**
-    * @var s_gpio:u_isr:reg
-    * Global interupt register
-    */
-    volatile uint32_t reg;
-
-    /**
-    * @union s_isr_bits
-    * @brief packed struct with bits.
-    */
-    struct s_isr_bits
-    {
-      /**
-      * @var s_gpio:u_isr:s_isr_bits:ch1_sta
-      * Channel 1 interupt status.
-      */
-      volatile uint8_t ch1_sta:1;
-
-      /**
-      * @var s_gpio:u_isr:s_isr_bits:ch2_sta
-      * Channel 2 interupt status.
-      */
-      volatile uint8_t ch2_sta:1;
-
-      /**
-      * @var s_gpio:u_ier:s_isr_bits:reserved
-      * Unused bits
-      */
-      volatile uint32_t reserved:30;
-    } bits;
-  } isr;
+  volatile uint32_t mtime1;
+  /**
+  * @var s_clint::reserved3
+  * unused regs
+  */
+  volatile uint32_t reserved3[9];
 };
 
 /*********************************************//**
@@ -180,10 +92,10 @@ struct s_gpio
   * @param memory_address is the starting memory_address
   * of the gpio on the system bus.
   *
-  * @return s_gpio is a struct with a pointer to the
+  * @return s_clint is a struct with a pointer to the
   * device memory address
   *************************************************/
-inline struct s_gpio *initGpio(uint32_t memory_address);
+inline struct s_clint *initGpio(uint32_t memory_address);
 
 #endif
 

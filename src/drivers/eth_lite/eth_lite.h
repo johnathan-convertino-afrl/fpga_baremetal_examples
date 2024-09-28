@@ -480,7 +480,7 @@ struct s_eth_lite
   * @return s_eth_lite is a struct with a pointer to the
   * device memory address
   *************************************************/
-inline struct s_eth_lite *initEthLite(uint32_t memory_address);
+struct s_eth_lite *initEthLite(uint32_t memory_address);
 
 /*********************************************//**
   * @brief Read eth_lite receive data
@@ -490,7 +490,7 @@ inline struct s_eth_lite *initEthLite(uint32_t memory_address);
   *
   * @return Length of packet
   *************************************************/
-inline uint32_t readEthLiteRXbuffer(struct s_eth_lite *p_eth_lite, uint32_t *p_data);
+uint32_t readEthLiteRXbuffer(struct s_eth_lite *p_eth_lite, uint32_t *p_data);
 
 /*********************************************//**
   * @brief Write eth_lite transmit data
@@ -499,7 +499,7 @@ inline uint32_t readEthLiteRXbuffer(struct s_eth_lite *p_eth_lite, uint32_t *p_d
   * @param p_data Pointer to a buffer to read data from.
   * @param len Length of the data buffer in words (32 bit)
   *************************************************/
-inline void writeEthLiteTXbuffer(struct s_eth_lite *p_eth_lite, uint32_t *p_data, uint32_t len);
+void writeEthLiteTXbuffer(struct s_eth_lite *p_eth_lite, uint32_t *p_data, uint32_t len);
 
 #endif
 

@@ -180,24 +180,43 @@ struct s_uart
   * @return s_uart is a struct with a pointer to the
   * device memory address
   *************************************************/
-inline struct s_uart *initUart(uint32_t memory_address);
+struct s_uart *initUart(uint32_t memory_address);
 
 /*********************************************//**
   * @brief Read uart rx data
   *
   * @param p_uart pre-initialized struct from initUart
   *
-  * @return 8 bit int with data.
+  * @return 8 bit uint with data.
   *************************************************/
-inline uint8_t getUartRxData(struct s_uart *p_uart);
+uint8_t getUartRxData(struct s_uart *p_uart);
 
 /*********************************************//**
   * @brief Write uart tx data
   *
   * @param p_uart pre-initialized struct from initUart
-  * @param data 8 bit vector to write to uart device
+  * @param data 8 bit uint to write to uart device
   *************************************************/
-inline void setUartTxData(struct s_uart *p_uart, uint8_t data);
+void setUartTxData(struct s_uart *p_uart, uint8_t data);
+
+/*********************************************//**
+  * @brief Write Strings to UART, send with \n\r terminaton
+  *
+  * @param p_uart pre-initialized struct from initUart
+  * @param p_string String with null terminator.
+  *************************************************/
+void sendUartString(struct s_uart *p_uart, char *p_string);
+
+/*********************************************//**
+  * @brief Read Strings from UART, with \n\r terminaton
+  *
+  * @param p_uart pre-initialized struct from initUart
+  * @param p_string String for storage.
+  * @param len max length the buffer can support.
+  *
+  * @return length of string with null terminator.
+  *************************************************/
+int recvUartString(struct s_uart *p_uart, char *p_string, int len);
 
 #endif
 

@@ -538,7 +538,7 @@ struct s_qspi
   * @return s_qspi is a struct with a pointer to the
   * device memory address
   *************************************************/
-inline struct s_qspi *initQspi(uint32_t memory_address);
+ struct s_qspi *initQspi(uint32_t memory_address);
 
 #endif
 

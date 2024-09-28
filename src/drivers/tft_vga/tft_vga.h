@@ -191,7 +191,7 @@ struct s_tft_vga
   * @return s_tft_vga is a struct with a pointer to the
   * device memory address
   *************************************************/
-inline struct s_tft_vga *initTFTvga(uint32_t memory_address);
+struct s_tft_vga *initTFTvga(uint32_t memory_address);
 
 #endif
 

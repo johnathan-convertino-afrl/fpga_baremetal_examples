@@ -36,7 +36,7 @@
 #include "qspi.h"
 
 // Initializes qspi structure and device
-inline struct s_qspi *initQspi(uint32_t memory_address)
+struct s_qspi *initQspi(uint32_t memory_address)
 {
   struct s_qspi *p_temp = (struct s_qspi *)memory_address;
 

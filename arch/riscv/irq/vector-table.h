@@ -19,9 +19,7 @@
 
 #include "riscv-irq.h"
 
-typedef void (*riscv_mtvec_table_fn)();
-
-void init_machine_irq(riscv_mtvec_table_fn p_riscv_mtvec_table);
+void init_machine_irq();
 
 /** Symbol for machine mode vector table - do not call 
  */

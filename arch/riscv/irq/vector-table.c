@@ -17,21 +17,24 @@
 #include "vector-table.h"
 #include "riscv-csr.h"
 
-void init_machine_irq(riscv_mtvec_table_fn p_riscv_mtvec_table)
+#include <stdint.h>
+
+void init_machine_irq()
 {
   // copy pasta from vector example
   // Global interrupt disable
   csr_clr_bits_mstatus(MSTATUS_MIE_BIT_MASK);
+
   csr_write_mie(0);
 
   // Setup the IRQ handler entry point, set the mode to vectored
-  csr_write_mtvec((uint_xlen_t) p_riscv_mtvec_table | 1);
+  csr_write_mtvec((uint_xlen_t) riscv_mtvec_table | 0x00000001);
 
-  // Enable MIE.MTI
-  csr_set_bits_mie(MIE_MTI_BIT_MASK);
+  // Enable MIE .. ?MIE_MTI_BIT_MASK?
+  csr_write_mie(MIE_MEI_BIT_MASK | MIE_MTI_BIT_MASK | MIE_MSI_BIT_MASK);
 
   // Global interrupt enable
-  csr_set_bits_mstatus(MSTATUS_MIE_BIT_MASK);
+  csr_write_mstatus(MSTATUS_MPP_BIT_MASK | MSTATUS_MIE_BIT_MASK);
 }
 
 // Vector table - not to be called.
@@ -47,6 +50,9 @@ void riscv_mtvec_exception(void) __attribute__ ((interrupt ("machine")     , wea
 void riscv_mtvec_msi(void) __attribute__ ((interrupt ("machine")     , weak, alias("riscv_nop_machine") )); 
 void riscv_mtvec_mti(void) __attribute__ ((interrupt ("machine")     , weak, alias("riscv_nop_machine") ));
 void riscv_mtvec_mei(void) __attribute__ ((interrupt ("machine")     , weak, alias("riscv_nop_machine") ));
+void riscv_mtvec_ssi(void) __attribute__ ((interrupt ("supervisor")  , weak, alias("riscv_nop_machine") ));
+void riscv_mtvec_sti(void) __attribute__ ((interrupt ("supervisor")  , weak, alias("riscv_nop_machine") ));
+void riscv_mtvec_sei(void) __attribute__ ((interrupt ("supervisor")  , weak, alias("riscv_nop_machine") ));
 
 void riscv_utvec_usi(void) __attribute__ ((interrupt ("user")        , weak, alias("riscv_nop_user") ));
 void riscv_utvec_uti(void) __attribute__ ((interrupt ("user")        , weak, alias("riscv_nop_user") ));
@@ -107,10 +113,12 @@ void riscv_utvec_table(void) {
 #pragma GCC optimize ("align-functions=4")
 
 static void riscv_nop_machine(void)  {
-    // Nop machine mode interrupt.
+  // Nop machine mode interrupt.
+  __asm__ volatile ("nop");
 }
 static void riscv_nop_user(void) {
-    // Nop user mode interrupt.
+  // Nop user mode interrupt.
+  __asm__ volatile ("nop");
 }
 
 #pragma GCC pop_options

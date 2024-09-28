@@ -37,7 +37,7 @@
 
 // Initializes gpio structure and device
 // to defaults, no IRQ, 0 output data, ALL outputs.
-inline struct s_gpio *initGpio(uint32_t memory_address)
+struct s_gpio *initGpio(uint32_t memory_address)
 {
   struct s_gpio *p_temp = (struct s_gpio *)memory_address;
 
