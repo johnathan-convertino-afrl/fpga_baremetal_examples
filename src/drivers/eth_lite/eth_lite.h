@@ -501,10 +501,9 @@ uint32_t readEthLiteRXbuffer(struct s_eth_lite *p_eth_lite, uint32_t *p_data);
   *************************************************/
 void writeEthLiteTXbuffer(struct s_eth_lite *p_eth_lite, uint32_t *p_data, uint32_t len);
 
-#endif
-
 #ifdef __cplusplus
 }
 #endif
 
+#endif
 

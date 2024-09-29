@@ -540,10 +540,9 @@ struct s_qspi
   *************************************************/
  struct s_qspi *initQspi(uint32_t memory_address);
 
-#endif
-
 #ifdef __cplusplus
 }
 #endif
 
+#endif
 

@@ -2164,10 +2164,9 @@ struct s_plic
   *************************************************/
 struct s_plic *initPlic(uint32_t memory_address);
 
-#endif
-
 #ifdef __cplusplus
 }
 #endif
 
+#endif
 

@@ -5,13 +5,9 @@
 
 cmake_minimum_required(VERSION 3.14)
 
-add_subdirectory(plic)
-add_subdirectory(clint)
+set(CLINT_DRV_SRCS
+  clint.c
+  clint.h
+)
 
-if(BUILD_UART_EXAMPLES OR BUILD_DRV_UART)
-  add_subdirectory(uart)
-endif()
-
-if(BUILD_GPIO_EXAMPLES OR BUILD_DRV_GPIO)
-  add_subdirectory(gpio)
-endif()
+add_library(clint_drv ${CLINT_DRV_SRCS})

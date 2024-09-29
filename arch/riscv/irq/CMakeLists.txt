@@ -6,7 +6,6 @@
 cmake_minimum_required(VERSION 3.14)
 
 set(IRQ_SRCS
-  riscv-csr.h
   riscv-irq.h
   vector-table.c
   vector-table.h

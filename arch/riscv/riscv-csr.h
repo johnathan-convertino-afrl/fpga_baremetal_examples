@@ -3126,25 +3126,155 @@ static inline uint_xlen_t csr_read_write_pmpaddr1(uint_xlen_t new_value) {
 }
 
 /*******************************************
- * pmpaddr15 - MRW - Physical memory protection address register. 
+ * pmpaddr2 - MRW - Physical memory protection address register.
  */
-static inline uint_xlen_t csr_read_pmpaddr15(void) {
-    uint_xlen_t value;        
-    __asm__ volatile ("csrr    %0, pmpaddr15" 
+static inline uint_xlen_t csr_read_pmpaddr2(void) {
+    uint_xlen_t value;
+    __asm__ volatile ("csrr    %0, pmpaddr2"
                       : "=r" (value)  /* output : register */
                       : /* input : none */
                       : /* clobbers: none */);
     return value;
 }
-static inline void csr_write_pmpaddr15(uint_xlen_t value) {
-    __asm__ volatile ("csrw    pmpaddr15, %0" 
-                      : /* output: none */ 
+static inline void csr_write_pmpaddr2(uint_xlen_t value) {
+    __asm__ volatile ("csrw    pmpaddr2, %0"
+                      : /* output: none */
                       : "r" (value) /* input : from register */
                       : /* clobbers: none */);
 }
-static inline uint_xlen_t csr_read_write_pmpaddr15(uint_xlen_t new_value) {
+static inline uint_xlen_t csr_read_write_pmpaddr2(uint_xlen_t new_value) {
     uint_xlen_t prev_value;
-    __asm__ volatile ("csrrw    %0, pmpaddr15, %1"  
+    __asm__ volatile ("csrrw    %0, pmpaddr2, %1"
+                      : "=r" (prev_value) /* output: register %0 */
+                      : "r" (new_value)  /* input : register */
+                      : /* clobbers: none */);
+    return prev_value;
+}
+
+/*******************************************
+ * pmpaddr3 - MRW - Physical memory protection address register.
+ */
+static inline uint_xlen_t csr_read_pmpaddr3(void) {
+    uint_xlen_t value;
+    __asm__ volatile ("csrr    %0, pmpaddr3"
+                      : "=r" (value)  /* output : register */
+                      : /* input : none */
+                      : /* clobbers: none */);
+    return value;
+}
+static inline void csr_write_pmpaddr3(uint_xlen_t value) {
+    __asm__ volatile ("csrw    pmpaddr3, %0"
+                      : /* output: none */
+                      : "r" (value) /* input : from register */
+                      : /* clobbers: none */);
+}
+static inline uint_xlen_t csr_read_write_pmpaddr3(uint_xlen_t new_value) {
+    uint_xlen_t prev_value;
+    __asm__ volatile ("csrrw    %0, pmpaddr3, %1"
+                      : "=r" (prev_value) /* output: register %0 */
+                      : "r" (new_value)  /* input : register */
+                      : /* clobbers: none */);
+    return prev_value;
+}
+
+/*******************************************
+ * pmpaddr4 - MRW - Physical memory protection address register.
+ */
+static inline uint_xlen_t csr_read_pmpaddr4(void) {
+    uint_xlen_t value;
+    __asm__ volatile ("csrr    %0, pmpaddr4"
+                      : "=r" (value)  /* output : register */
+                      : /* input : none */
+                      : /* clobbers: none */);
+    return value;
+}
+static inline void csr_write_pmpaddr41(uint_xlen_t value) {
+    __asm__ volatile ("csrw    pmpaddr4, %0"
+                      : /* output: none */
+                      : "r" (value) /* input : from register */
+                      : /* clobbers: none */);
+}
+static inline uint_xlen_t csr_read_write_pmpaddr4(uint_xlen_t new_value) {
+    uint_xlen_t prev_value;
+    __asm__ volatile ("csrrw    %0, pmpaddr4, %1"
+                      : "=r" (prev_value) /* output: register %0 */
+                      : "r" (new_value)  /* input : register */
+                      : /* clobbers: none */);
+    return prev_value;
+}
+
+/*******************************************
+ * pmpaddr5 - MRW - Physical memory protection address register.
+ */
+static inline uint_xlen_t csr_read_pmpaddr5(void) {
+    uint_xlen_t value;
+    __asm__ volatile ("csrr    %0, pmpaddr5"
+                      : "=r" (value)  /* output : register */
+                      : /* input : none */
+                      : /* clobbers: none */);
+    return value;
+}
+static inline void csr_write_pmpaddr5(uint_xlen_t value) {
+    __asm__ volatile ("csrw    pmpaddr5, %0"
+                      : /* output: none */
+                      : "r" (value) /* input : from register */
+                      : /* clobbers: none */);
+}
+static inline uint_xlen_t csr_read_write_pmpaddr5(uint_xlen_t new_value) {
+    uint_xlen_t prev_value;
+    __asm__ volatile ("csrrw    %0, pmpaddr5, %1"
+                      : "=r" (prev_value) /* output: register %0 */
+                      : "r" (new_value)  /* input : register */
+                      : /* clobbers: none */);
+    return prev_value;
+}
+
+/*******************************************
+ * pmpaddr6 - MRW - Physical memory protection address register.
+ */
+static inline uint_xlen_t csr_read_pmpaddr6(void) {
+    uint_xlen_t value;
+    __asm__ volatile ("csrr    %0, pmpaddr6"
+                      : "=r" (value)  /* output : register */
+                      : /* input : none */
+                      : /* clobbers: none */);
+    return value;
+}
+static inline void csr_write_pmpaddr6(uint_xlen_t value) {
+    __asm__ volatile ("csrw    pmpaddr6, %0"
+                      : /* output: none */
+                      : "r" (value) /* input : from register */
+                      : /* clobbers: none */);
+}
+static inline uint_xlen_t csr_read_write_pmpaddr6(uint_xlen_t new_value) {
+    uint_xlen_t prev_value;
+    __asm__ volatile ("csrrw    %0, pmpaddr6, %1"
+                      : "=r" (prev_value) /* output: register %0 */
+                      : "r" (new_value)  /* input : register */
+                      : /* clobbers: none */);
+    return prev_value;
+}
+
+/*******************************************
+ * pmpaddr7 - MRW - Physical memory protection address register.
+ */
+static inline uint_xlen_t csr_read_pmpaddr7(void) {
+    uint_xlen_t value;
+    __asm__ volatile ("csrr    %0, pmpaddr7"
+                      : "=r" (value)  /* output : register */
+                      : /* input : none */
+                      : /* clobbers: none */);
+    return value;
+}
+static inline void csr_write_pmpaddr7(uint_xlen_t value) {
+    __asm__ volatile ("csrw    pmpaddr7, %0"
+                      : /* output: none */
+                      : "r" (value) /* input : from register */
+                      : /* clobbers: none */);
+}
+static inline uint_xlen_t csr_read_write_pmpaddr7(uint_xlen_t new_value) {
+    uint_xlen_t prev_value;
+    __asm__ volatile ("csrrw    %0, pmpaddr7, %1"
                       : "=r" (prev_value) /* output: register %0 */
                       : "r" (new_value)  /* input : register */
                       : /* clobbers: none */);

@@ -31,8 +31,6 @@
   * IN THE SOFTWARE.
   *****************************************************************************/
 
-#include <stdlib.h>
-
 #include "gpio.h"
 
 // Initializes gpio structure and device

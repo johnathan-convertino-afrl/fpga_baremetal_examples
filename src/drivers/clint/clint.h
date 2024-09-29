@@ -33,6 +33,8 @@
 #ifndef __CLINT_DRV_H
 #define __CLINT_DRV_H
 
+#include <stdint.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -52,42 +54,37 @@ struct s_clint
   * @var s_clint::reserved1
   * unused regs
   */
-  volatile uint32_t reserved1[16380];
+  volatile uint32_t reserved1[4095];
   /**
-  * @var s_clint::mtimecmp0
+  * @var s_clint::mtimecmplw
   * timer lsw
   */
-  volatile uint32_t mtimecmp0;
+  volatile uint32_t mtimecmplw;
   /**
-  * @var s_clint::mtimecmp1
+  * @var s_clint::mtimecmphw
   * timer msw
   */
-  volatile uint32_t mtimecmp1;
+  volatile uint32_t mtimecmphw;
   /**
   * @var s_clint::reserved2
   * unused regs
   */
-  volatile uint32_t reserved2[32752];
+  volatile uint32_t reserved2[8188];
   /**
-  * @var s_clint::mtime0
+  * @var s_clint::mtime_lw
   * time lsw
   */
-  volatile uint32_t mtime0;
+  volatile uint32_t mtimelw;
   /**
-  * @var s_clint::mtime1
+  * @var s_clint::mtime_hw
   * time msw
   */
-  volatile uint32_t mtime1;
-  /**
-  * @var s_clint::reserved3
-  * unused regs
-  */
-  volatile uint32_t reserved3[9];
+  volatile uint32_t mtimehw;
 };
 
 /*********************************************//**
-  * @brief Initializes gpio structure and device
-  * to defaults, no IRQ, 0 output data, ALL outputs.
+  * @brief Initializes clint structure and device
+  * to defaults.
   *
   * @param memory_address is the starting memory_address
   * of the gpio on the system bus.
@@ -95,12 +92,76 @@ struct s_clint
   * @return s_clint is a struct with a pointer to the
   * device memory address
   *************************************************/
-inline struct s_clint *initGpio(uint32_t memory_address);
+struct s_clint *initClint(uint32_t memory_address);
 
-#endif
+/*********************************************//**
+  * @brief set clint mtime compare
+  *
+  * @param p_clint is a struct pointing to the clint memory space
+  * @param mtimecmp a value to set the mtime compare
+  *************************************************/
+void setClintMTimeCmp(struct s_clint *p_clint, uint64_t mtimecmp);
+
+/*********************************************//**
+  * @brief set clint mtime compare with an offset
+  * that is based on mtime.
+  *
+  * @param p_clint is a struct pointing to the clint memory space
+  * @param clock_offset number of ticks for the offset needed
+  *************************************************/
+void setClintMTimeCmpOffset(struct s_clint *p_clint, uint64_t clock_offset);
+
+/*********************************************//**
+  * @brief get clint mtime
+  *
+  * @param p_clint is a struct pointing to the clint memory space
+  *
+  * @return s_clint is a struct with a pointer to the
+  * device memory address
+  *************************************************/
+uint64_t getClintMTime(struct s_clint *p_clint);
+
+/*********************************************//**
+  * @brief calculate number of seconds to for mtimercmp
+  *
+  * @param timer_freq_hz CLINT frequency in hz
+  * @param seconds number of seconds desired
+  *
+  * @return Number of ticks that represents time requested
+  *************************************************/
+inline uint64_t calcMtimecmpSeconds(uint64_t timer_freq_hz, uint64_t seconds)
+{
+  return seconds * timer_freq_hz;
+}
+
+/*********************************************//**
+  * @brief calculate number of milliseconds to for mtimercmp
+  *
+  * @param timer_freq_hz CLINT frequency in hz
+  * @param milliseconds number of milliseconds desired
+  *
+  * @return Number of ticks that represents time requested
+  *************************************************/
+inline uint64_t calcMtimecmpMilliseconds(uint64_t timer_freq_hz, uint64_t milliseconds)
+{
+  return (milliseconds * timer_freq_hz)/1000;
+}
+
+/*********************************************//**
+  * @brief calculate number of microseconds to for mtimercmp
+  *
+  * @param timer_freq_hz CLINT frequency in hz
+  * @param microseconds number of microseconds desired
+  *
+  * @return Number of ticks that represents time requested
+  *************************************************/
+inline uint64_t calcMtimecmpMicroseconds(uint64_t timer_freq_hz, uint64_t microseconds)
+{
+  return (microseconds * timer_freq_hz)/1000000;
+}
 
 #ifdef __cplusplus
 }
 #endif
 
-
+#endif

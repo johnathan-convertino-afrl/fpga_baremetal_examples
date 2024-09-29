@@ -34,6 +34,8 @@
 #ifndef __GPIO_DRV_H
 #define __GPIO_DRV_H
 
+#include <stdint.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -185,10 +187,10 @@ struct s_gpio
   *************************************************/
 struct s_gpio *initGpio(uint32_t memory_address);
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif
 
 

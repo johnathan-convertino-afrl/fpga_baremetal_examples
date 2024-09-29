@@ -5,10 +5,12 @@
 
 cmake_minimum_required(VERSION 3.14)
 
+## APPLICATIONS
 if(NOT DEFINED BUILD_EXAMPLES_ALL)
   set(BUILD_EXAMPLES_ALL OFF)
 else()
   set(BUILD_UART_EXAMPLES ON)
+  set(BUILD_GPIO_EXAMPLES ON)
 endif()
 
 if(BUILD_UART_EXAMPLES)
@@ -16,14 +18,25 @@ if(BUILD_UART_EXAMPLES)
   add_subdirectory(apps)
 endif()
 
+if(BUILD_GPIO_EXAMPLES)
+  set(BUILD_DRV_GPIO ON)
+  add_subdirectory(apps)
+endif()
+
+## DRIVERS
 if(NOT DEFINED BUILD_DRV_ALL)
   set(BUILD_DRV_ALL OFF)
 else()
   set(BUILD_DRV_UART ON)
+  set(BUILD_DRV_GPIO ON)
 endif()
 
 if(NOT DEFINED BUILD_DRV_UART)
   set(BUILD_DRV_UART OFF)
+endif()
+
+if(NOT DEFINED BUILD_DRV_GPIO)
+  set(BUILD_DRV_UART ON)
 endif()
 
 add_subdirectory(drivers)

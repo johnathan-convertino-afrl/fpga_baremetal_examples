@@ -1,5 +1,7 @@
 #include <base.h>
+
 #include <uart/uart.h>
+
 #include <stdint.h>
 
 #define UART_ADDR   0x44A10000

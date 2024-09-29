@@ -193,10 +193,9 @@ struct s_tft_vga
   *************************************************/
 struct s_tft_vga *initTFTvga(uint32_t memory_address);
 
-#endif
-
 #ifdef __cplusplus
 }
 #endif
 
+#endif
 

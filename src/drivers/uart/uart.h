@@ -218,10 +218,10 @@ void sendUartString(struct s_uart *p_uart, char *p_string);
   *************************************************/
 int recvUartString(struct s_uart *p_uart, char *p_string, int len);
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif
 
 
