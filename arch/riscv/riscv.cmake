@@ -83,3 +83,5 @@ set( CMAKE_ASM_FLAGS "${CMAKE_C_FLAGS}" CACHE STRING "" )
 set( CMAKE_EXE_LINKER_FLAGS   "-T ${LINKER_SCRIPT} -march=${CMAKE_SYSTEM_PROCESSOR} -lgcc -mcmodel=medany -nostartfiles -ffreestanding " )
 
 include_directories(${CMAKE_SOURCE_DIR}/arch/riscv/)
+
+include_directories(${CMAKE_SOURCE_DIR}/arch/riscv/src/)
