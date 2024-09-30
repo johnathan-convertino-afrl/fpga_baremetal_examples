@@ -53,9 +53,18 @@ endif()
 if(BUILD_GPIO_EXAMPLES)
   #gpio led increment, irq method
   add_executable(led_gpio_timer_irq.elf led_gpio_timer_irq.c)
-  target_link_libraries(led_gpio_timer_irq.elf PRIVATE gpio_drv plic_drv clint_drv)
+  target_link_libraries(led_gpio_timer_irq.elf PRIVATE gpio_drv plic_drv clint_drv uart_drv)
 
   gen_target_binary(led_gpio_timer_irq.elf)
+
+endif()
+
+if(BUILD_PMP_EXAMPLES)
+  #gpio led increment, irq method
+  add_executable(pmp_write_lock_read.elf pmp_write_lock_read.c)
+  target_link_libraries(pmp_write_lock_read.elf PRIVATE plic_drv clint_drv uart_drv)
+
+  gen_target_binary(pmp_write_lock_read.elf)
 
 endif()
 

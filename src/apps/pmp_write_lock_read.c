@@ -1,7 +1,6 @@
 #include <base.h>
 #include <riscv-csr.h>
 
-#include <gpio/gpio.h>
 #include <plic/plic.h>
 #include <clint/clint.h>
 #include <uart/uart.h>
@@ -10,15 +9,13 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-#define GPIO_ADDR   0x44A00000
 #define UART_ADDR   0x44A10000
 #define PLIC_ADDR   0x0C000000
 #define CLINT_ADDR  0x02000000
+#define DDR_ADDR    0x90000000
 
 //CPU CLOCK FREQ, USED FOR CLINT CALC INLINE FUNCTIONS
 #define CPU_FREQ_HZ 50000000
-
-const char g_message[] = "LED EXAMPLE TIMER IRQ";
 
 struct s_plic   *gp_plic;
 struct s_clint  *gp_clint;
@@ -34,12 +31,25 @@ static volatile uint64_t wtf_count = 0;
 
 static volatile uint64_t seconds = 0;
 
+static volatile uint32_t ddr_read = 0;
+
+volatile uint32_t *DDR_START = (volatile uint32_t *)DDR_ADDR;
+
 int main()
 {
   gp_uart  = initUart(UART_ADDR);
-  gp_gpio  = initGpio(GPIO_ADDR);
   gp_plic  = initPlic(PLIC_ADDR);
   gp_clint = initClint(CLINT_ADDR);
+
+  *DDR_START = 0xDEADBEEF;
+
+  //Address is right shift by 2. Region size is 2^(lszb+3) (0 is 8 bytes, 3 is 32, 011, the LSZB is 2 so 2+3 is 5.. 2^5).
+  csr_write_pmpaddr0((DDR_ADDR >> 2) | 0x00000003);
+
+  //used one pmpconfig from pmpcfg0 aka pmp0cfg
+  //all are 8 bits
+  // 7 = lock, 4:3 = address matching mode, 2:0 = permissions
+  csr_write_pmpcfg0(0x00000098);
 
   // init machine mvtec and enable machine irqs.
   init_machine_irq();
@@ -49,10 +59,15 @@ int main()
 
   setClintMTimeCmpOffset(gp_clint, calcMtimecmpSeconds(CPU_FREQ_HZ, 1));
 
+  ddr_read = *DDR_START;
+
   for(;;)
   {
+    *DDR_START = 0xAAAA5555;
+
     // Wait for timer interrupt
     __asm__ volatile ("wfi");
+
     // Try a synchronous exception.
     __asm__ volatile ("ecall");
   }
@@ -69,13 +84,12 @@ void riscv_mtvec_mti(void)
 {
   seconds++;
 
-  gp_gpio->data1 = seconds;
   // Timer exception, re-program the timer for a one second tick.
   timestamp = getClintMTime(gp_clint);
 
   setClintMTimeCmpOffset(gp_clint, calcMtimecmpSeconds(CPU_FREQ_HZ, 1));
 
-  sendUartString(gp_uart, g_message);
+  sendUartString(gp_uart, "TIMER TICK");
 }
 // The 'riscv_mtvec_exception' function is added to the vector table by the vector_table.c
 // This function looks at the cause of the exception, if it is an 'ecall' instruction then increment a global counter.
@@ -90,7 +104,18 @@ void riscv_mtvec_exception(void)
     case RISCV_EXCP_ENVIRONMENT_CALL_FROM_M_MODE:
       ecall_count++;
       // Make sure the return address is the instruction AFTER ecall
+      sendUartString(gp_uart, "ECALL FROM M MODE");
       csr_write_mepc(this_pc+4);
+      break;
+    case RISCV_EXCP_LOAD_ACCESS_FAULT:
+      sendUartString(gp_uart, "PMP.. READ LOCKED");
+      // plus 14 since lw is done at start, an we want to skip all the other stuff
+      csr_write_mepc(this_pc+14);
+      break;
+    case RISCV_EXCP_STORE_AMO_ACCESS_FAULT:
+      sendUartString(gp_uart, "PMP.. WRITE LOCKED");
+      // plus 2, since sw is 2 bytes
+      csr_write_mepc(this_pc+2);
       break;
     default:
       wtf_count++;

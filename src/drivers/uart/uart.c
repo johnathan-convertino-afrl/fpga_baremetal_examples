@@ -59,9 +59,11 @@ void setUartTxData(struct s_uart *p_uart, uint8_t data)
 }
 
 // Write Strings to UART
-void sendUartString(struct s_uart *p_uart, char *p_string)
+void sendUartString(struct s_uart *p_uart, const char *p_string)
 {
   int index = 0;
+
+  const char term[] = "\n\r";
 
   if(!p_uart)   return;
   if(!p_string) return;
@@ -73,7 +75,12 @@ void sendUartString(struct s_uart *p_uart, char *p_string)
     setUartTxData(p_uart, p_string[index]);
   }
 
-  sendUartString(p_uart, "\n\r");
+  for(index = 0; term[index] != '\0'; index++)
+  {
+    while(p_uart->status.bits.tx_fifo_full);
+
+    setUartTxData(p_uart, term[index]);
+  }
 }
 
 // Read Strings from UART

@@ -11,16 +11,20 @@ if(NOT DEFINED BUILD_EXAMPLES_ALL)
 else()
   set(BUILD_UART_EXAMPLES ON)
   set(BUILD_GPIO_EXAMPLES ON)
+  set(BUILD_PMP_EXAMPLES ON)
 endif()
 
 if(BUILD_UART_EXAMPLES)
   set(BUILD_DRV_UART ON)
-  add_subdirectory(apps)
 endif()
 
 if(BUILD_GPIO_EXAMPLES)
   set(BUILD_DRV_GPIO ON)
-  add_subdirectory(apps)
+  set(BUILD_DRV_UART ON)
+endif()
+
+if(BUILD_PMP_EXAMPLES)
+  set(BUILD_DRV_UART ON)
 endif()
 
 ## DRIVERS
@@ -36,9 +40,10 @@ if(NOT DEFINED BUILD_DRV_UART)
 endif()
 
 if(NOT DEFINED BUILD_DRV_GPIO)
-  set(BUILD_DRV_UART ON)
+  set(BUILD_DRV_GPIO OFF)
 endif()
 
+add_subdirectory(apps)
 add_subdirectory(drivers)
 
 if(CREATE_DOXYGEN)

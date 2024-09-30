@@ -205,7 +205,7 @@ void setUartTxData(struct s_uart *p_uart, uint8_t data);
   * @param p_uart pre-initialized struct from initUart
   * @param p_string String with null terminator.
   *************************************************/
-void sendUartString(struct s_uart *p_uart, char *p_string);
+void sendUartString(struct s_uart *p_uart, const char *p_string);
 
 /*********************************************//**
   * @brief Read Strings from UART, with \n\r terminaton
