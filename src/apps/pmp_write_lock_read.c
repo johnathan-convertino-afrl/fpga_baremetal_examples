@@ -41,18 +41,19 @@ int main()
   gp_plic  = initPlic(PLIC_ADDR);
   gp_clint = initClint(CLINT_ADDR);
 
+  // init machine mvtec and enable machine irqs.
+  init_machine_irq();
+
   *DDR_START = 0xDEADBEEF;
 
   //Address is right shift by 2. Region size is 2^(lszb+3) (0 is 8 bytes, 3 is 32, 011, the LSZB is 2 so 2+3 is 5.. 2^5).
+  //This PMP only supports NAPOT mode, or disabled.
   csr_write_pmpaddr0((DDR_ADDR >> 2) | 0x00000003);
 
   //used one pmpconfig from pmpcfg0 aka pmp0cfg
   //all are 8 bits
   // 7 = lock, 4:3 = address matching mode, 2:0 = permissions
   csr_write_pmpcfg0(0x00000098);
-
-  // init machine mvtec and enable machine irqs.
-  init_machine_irq();
 
   // Setup timer for 1 second interval
   timestamp = getClintMTime(gp_clint);
