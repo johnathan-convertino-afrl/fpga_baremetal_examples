@@ -1,48 +1,28 @@
-# DSP Node with examples
+# FPGA baremetal examples
 
-Examples for various digital signal processing library functions and interfaces (file, ALSA, UHD, VOSK).
+INFORMATION
 
 author: Jay Convertino  
 
-date: 2023.07.15
+date: 2024.10.02
 
 license: MIT
 
 ## Release Versions
 ### Current
-  - v0.5.0 - works, but needs alot of polish.
+  - v0.0.0
 
 ### Past
   - none
 
 ## License
-  All files, excluding the samples directory and its contents, fall under the MIT license included with this readme file.
+  All files
 
 ## Info
-  - samples : Contains example files to be used for samples
-  - src : contains all source code for DSP nodes and examples.
   
 ## Requirements (Ubuntu 20.04)
-  - C89_pthread_ring_buffer (https://github.com/sparkletron/C89_pthread_ring_buffer)
-  - build-essential
-  - cmake
-
-### Vosk/Kaldi Requirements
-  - libblas-dev
-  - libblas64-dev
-  - libatlas-base-dev
-  - liblapack-dev
-  - libopenblas-dev
-  - libgsl-dev
 
 ## Recommended
-  - Codec2 v1.0.5 or greater (https://github.com/drowe67/codec2)
-  - UHD v4.4.0.0 (https://github.com/EttusResearch/uhd)
-  - Vosk v0.3.50 or greater (https://github.com/alphacep/vosk-api)
-  - SOXR master
-  - libasound2-dev
-  - ncurses5-dev
-  - doxygen
   
 ## Building
   1. mkdir build
@@ -72,6 +52,6 @@ The Following options are off by default. ALSA will not build if it is not found
     - BUILD_LIB_CODEC2 : data mod/demod
     - BUILD_LIB_TCP : TCP server or client
     - BUILD_LIB_VOSK : VOSK speech to txt processor.
-  
+
 To turn on codec2 for example:
   - cmake ../ -DBUILD_CODEC2_EXAMPLES=ON
