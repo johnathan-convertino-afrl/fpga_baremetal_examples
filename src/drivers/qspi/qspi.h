@@ -45,10 +45,10 @@ extern "C" {
 struct s_qspi
 {
   /**
-  * @var s_qspi::unused_array0
+  * @var s_qspi::reserved0
   * unused section of register map 0x00 - 0x1C
   */
-  volatile uint32_t unused_array0[8];
+  volatile uint32_t reserved0[7];
   /**
   * @union u_gier
   * @brief Register gier with packed struct to access individual bits
@@ -191,6 +191,12 @@ struct s_qspi
   } isr;
 
   /**
+  * @var s_qspi::reserved1
+  * unused section of register map 0x24 - 0x28
+  */
+  volatile uint32_t reserved1;
+
+  /**
   * @union u_ier
   * @brief Register ier with packed struct to access individual bits
   */
@@ -301,10 +307,10 @@ struct s_qspi
   } ier;
 
   /**
-  * @var s_qspi::unused_array1
-  * unused section of register map
+  * @var s_qspi::reserved2
+  * unused section of register map 0x28 - 0x40
   */
-  volatile uint32_t unused_array1[7];
+  volatile uint32_t reserved2[5];
 
   /**
   * @var s_qspi::srr
@@ -313,10 +319,10 @@ struct s_qspi
   volatile uint32_t srr;
 
   /**
-  * @var s_qspi::unused_array2
-  * unused section of register map
+  * @var s_qspi::reserved3
+  * unused section of register map 0x40 - 0x60
   */
-  volatile uint32_t unused_array2[9];
+  volatile uint32_t reserved3[7];
 
   /**
   * @union u_control

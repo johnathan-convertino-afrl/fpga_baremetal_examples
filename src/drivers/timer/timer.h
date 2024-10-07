@@ -142,15 +142,10 @@ struct s_timer
   */
   volatile uint32_t tcr0;
   /**
-  * @var s_timer::resrv0
+  * @var s_timer::reserved
   * reserved
   */
-  volatile uint32_t resrv0;
-  /**
-  * @var s_timer::resrv1
-  * reserved
-  */
-  volatile uint32_t resrv1;
+  volatile uint32_t reserved[2];
   /**
   * @union u_tcsr1
   * @brief Register tcsr1 with packed struct to access individual bits
@@ -241,16 +236,6 @@ struct s_timer
   * timer 1 counter register
   */
   volatile uint32_t tcr1;
-  /**
-  * @var s_timer::resrv2
-  * reserved
-  */
-  volatile uint32_t resrv2;
-  /**
-  * @var s_timer::resrv3
-  * reserved
-  */
-  volatile uint32_t resrv3;
 };
 
 /*********************************************//**

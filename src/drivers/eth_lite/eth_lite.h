@@ -48,13 +48,13 @@ struct s_eth_lite
   * @var s_eth_lite::tx_ping_buffer
   * TX Ping buffer 0x000 - 0x7DC
   */
-  volatile uint32_t tx_ping_buffer[504];
+  volatile uint32_t tx_ping_buffer[503];
 
   /**
-  * @var s_eth_lite::unused_array0
-  * Unused registers
+  * @var s_eth_lite::reserved0
+  * unused section of register map 0x7DC - 0x7E4
   */
-  volatile uint32_t unused_array0[8];
+  volatile uint32_t reserved0;
 
   /**
   * @union u_mdio_address
@@ -279,13 +279,13 @@ struct s_eth_lite
   * @var s_eth_lite::tx_pong_buffer
   * TX Ping buffer 0x800 - 0xFE0
   */
-  volatile uint32_t tx_pong_buffer[504];
+  volatile uint32_t tx_pong_buffer[503];
 
   /**
-  * @var s_eth_lite::unused_array1
-  * Unused registers
+  * @var s_eth_lite::reserved1
+  * unused section of register map 0xFE0 - 0xFF0
   */
-  volatile uint32_t unused_array1[2];
+  volatile uint32_t reserved1[3];
 
   /**
   * @union u_trans_pong_packet_len
@@ -326,10 +326,10 @@ struct s_eth_lite
   } trans_pong_packet_len;
 
   /**
-  * @var s_eth_lite::unused_array2
-  * Unused registers
+  * @var s_eth_lite::reserved2
+  * unused section of register map 0x0FF8
   */
-  volatile uint32_t unused_array2[1];
+  volatile uint32_t reserved2;
 
   /**
   * @union u_trans_pong_cntrl
@@ -373,13 +373,13 @@ struct s_eth_lite
   * @var s_eth_lite::rx_ping_buffer
   * TX Ping buffer 0x1000 - 0x17DC
   */
-  volatile uint32_t rx_ping_buffer[504];
+  volatile uint32_t rx_ping_buffer[503];
 
   /**
-  * @var s_eth_lite::unused_array3
-  * Unused registers
+  * @var s_eth_lite::reserved3
+  * unused section of register map 0x17E0 - 0x17F8
   */
-  volatile uint32_t unused_array3[19];
+  volatile uint32_t reserved3[5];
 
   /**
   * @union u_recv_ping_cntrl
@@ -429,13 +429,13 @@ struct s_eth_lite
   * @var s_eth_lite::rx_pong_buffer
   * TX Ping buffer 0x1800 - 0x1FDC
   */
-  volatile uint32_t rx_pong_buffer[504];
+  volatile uint32_t rx_pong_buffer[503];
 
   /**
-  * @var s_eth_lite::unused_array3
-  * Unused registers
+  * @var s_eth_lite::reserved4
+  * unused section of register map 0x1FE0 - 0x1FF8
   */
-  volatile uint32_t unused_array3[19];
+  volatile uint32_t reserved4[5];
 
   /**
   * @union u_recv_pong_cntrl
