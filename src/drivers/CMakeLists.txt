@@ -17,5 +17,5 @@ if(BUILD_GPIO_EXAMPLES OR BUILD_DRV_GPIO)
 endif()
 
 if(BUILD_SDCARD_EXAMPLES OR BUILD_DRV_SDCARD)
-  add_subdirectory(zipcpu_sdspi)
+  add_subdirectory(sdcard)
 endif()
