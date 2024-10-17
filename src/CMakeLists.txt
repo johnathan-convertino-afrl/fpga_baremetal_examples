@@ -12,6 +12,9 @@ else()
   set(BUILD_UART_EXAMPLES ON)
   set(BUILD_GPIO_EXAMPLES ON)
   set(BUILD_PMP_EXAMPLES ON)
+  set(BUILD_SDCARD_EXAMPLES ON)
+  set(BUILD_DRV_ALL ON)
+  set(BUILD_UTIL_ALL ON)
 endif()
 
 if(BUILD_UART_EXAMPLES)
@@ -27,12 +30,19 @@ if(BUILD_PMP_EXAMPLES)
   set(BUILD_DRV_UART ON)
 endif()
 
+if(BUILD_SDCARD_EXAMPLES)
+  set(BUILD_DRV_SDCARD ON)
+  set(BUILD_DRV_UART ON)
+  set(BUILD_UTIL_FATFS ON)
+endif()
+
 ## DRIVERS
 if(NOT DEFINED BUILD_DRV_ALL)
   set(BUILD_DRV_ALL OFF)
 else()
   set(BUILD_DRV_UART ON)
   set(BUILD_DRV_GPIO ON)
+  set(BUILD_DRV_SDCARD ON)
 endif()
 
 if(NOT DEFINED BUILD_DRV_UART)
@@ -43,8 +53,24 @@ if(NOT DEFINED BUILD_DRV_GPIO)
   set(BUILD_DRV_GPIO OFF)
 endif()
 
+if(NOT DEFINED BUILD_DRV_SDCARD)
+  set(BUILD_DRV_SDCARD OFF)
+endif()
+
+## UTILITY
+if(NOT DEFINED BUILD_UTIL_ALL)
+  set(BUILD_UTIL_ALL OFF)
+else()
+  set(BUILD_UTIL_FATFS ON)
+endif()
+
+if(NOT DEFINED BUILD_UTIL_FATFS)
+  set(BUILD_UTIL_FATFS OFF)
+endif()
+
 add_subdirectory(apps)
 add_subdirectory(drivers)
+add_subdirectory(util)
 
 if(CREATE_DOXYGEN)
   find_package(Doxygen REQUIRED dot OPTIONAL_COMPONENTS mscgen dia)

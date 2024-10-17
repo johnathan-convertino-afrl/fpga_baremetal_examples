@@ -70,6 +70,14 @@ if(BUILD_PMP_EXAMPLES)
 
 endif()
 
+if(BUILD_SDCARD_EXAMPLES)
+  add_executable(sdcard_dir_list.elf sdcard_dir_list.c)
+  target_link_libraries(sdcard_dir_list.elf PRIVATE plic_drv clint_drv uart_drv sdcard_drv fatfs_util)
+
+  gen_target_binary(sdcard_dir_list.elf)
+
+endif()
+
 message(STATUS "Applications selected to build:")
 
 get_property(target_names DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY BUILDSYSTEM_TARGETS)
