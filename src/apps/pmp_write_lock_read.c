@@ -35,6 +35,8 @@ static volatile uint32_t ddr_read = 0;
 
 volatile uint32_t *DDR_START = (volatile uint32_t *)DDR_ADDR;
 
+extern int _WFI_CALL_START, _FOR_LOOP_START, _FOR_LOOP_END;
+
 int main()
 {
   gp_uart  = initUart(UART_ADDR);
@@ -62,15 +64,22 @@ int main()
 
   ddr_read = *DDR_START;
 
+  __asm__ volatile ("_FOR_LOOP_START:");
+
   for(;;)
   {
+
     *DDR_START = 0xAAAA5555;
+
+    __asm__ volatile ("_WFI_CALL_START:");
 
     // Wait for timer interrupt
     __asm__ volatile ("wfi");
 
-    // Try a synchronous exception.
+    // Try a synchronous exception.RISCV_EXCP_ENVIRONMENT_CALL_FROM_M_MODE
     __asm__ volatile ("ecall");
+
+    __asm__ volatile ("_FOR_LOOP_END:");
   }
 
   return 0;
@@ -97,7 +106,7 @@ void riscv_mtvec_mti(void)
 void riscv_mtvec_exception(void)
 {
   uint_xlen_t this_cause = csr_read_mcause();
-  uint_xlen_t this_pc    = csr_read_mepc();
+  // uint_xlen_t this_pc    = csr_read_mepc();
 
   //uint_xlen_t this_value = csr_read_mtval();
   switch (this_cause)
@@ -106,17 +115,17 @@ void riscv_mtvec_exception(void)
       ecall_count++;
       // Make sure the return address is the instruction AFTER ecall
       sendUartString(gp_uart, "ECALL FROM M MODE");
-      csr_write_mepc(this_pc+4);
+      csr_write_mepc((int)&_FOR_LOOP_END);
       break;
     case RISCV_EXCP_LOAD_ACCESS_FAULT:
       sendUartString(gp_uart, "PMP.. READ LOCKED");
       // plus 14 since lw is done at start, an we want to skip all the other stuff
-      csr_write_mepc(this_pc+14);
+      csr_write_mepc((int)&_FOR_LOOP_START);
       break;
     case RISCV_EXCP_STORE_AMO_ACCESS_FAULT:
       sendUartString(gp_uart, "PMP.. WRITE LOCKED");
       // plus 2, since sw is 2 bytes
-      csr_write_mepc(this_pc+2);
+      csr_write_mepc((int)&_WFI_CALL_START);
       break;
     default:
       wtf_count++;
