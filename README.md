@@ -1,6 +1,5 @@
 # FPGA baremetal examples
-
-INFORMATION
+# Currently a RISCV only C based set of libraries for baremetal examples. Designed to target multiple architectures in the future.
 
 author: Jay Convertino  
 
@@ -15,12 +14,12 @@ license: MIT
 ### Past
   - none
 
-## License
-  All files
-
 ## Info
+
+  This setup uses the fiveembedded gcc startup and other support files to create the baremetal system. I've simply intergrated
+  them with my cmake setup and added examples.
   
-## Requirements (Ubuntu 20.04)
+## Requirements (Ubuntu 24.04)
 
 ## Recommended
   
@@ -32,26 +31,20 @@ license: MIT
 
 ## Cmake options
 
-The Following options are off by default. ALSA will not build if it is not found.
+The Following options are off by default.
   * EXAMPLE APPLICATIONS:
-    - BUILD_EXAMPLES_ALL : Build all examples.
-    - BUILD_ALSA_EXAMPLES : Only build ALSA only examples.
-    - BUILD_CODEC2_EXAMPLES : Only build CODEC2 only examples.
-    - BUILD_UHD_EXAMPLES : Only build UHD only examples
-    - BUILD_SOXR_EXAMPLES : Only build SOXR only examples.
-    - BUILD_VOSK_EXAMPLES : Only build VOSK only examples.
-    - BUILD_EXAMPLES : Only build file to file examples.
-    - BUILD_NCURSES_VERSIONS : Build any of the above, but as a version with ncurses gui.
-    - CREATE_DOXYGEN : Generate doxygen documents for DSP Node.
-  * LIBRARIES (will automagically build for applications above)
-    - BUILD_LIB_ALL : Build all dsp_node libraries
-    - BUILD_LIB_SOXR : resample functions
-    - BUILD_LIB_FILE : file functions
-    - BUILD_LIB_UHD  : ettus radio
-    - BUILD_LIB_ALSA : linux audio
-    - BUILD_LIB_CODEC2 : data mod/demod
-    - BUILD_LIB_TCP : TCP server or client
-    - BUILD_LIB_VOSK : VOSK speech to txt processor.
+    - BUILD_EXAMPLES_ALL : All applications will be built
+    - BUILD_UART_EXAMPLES : Build only UART applications
+    - BUILD_GPIO_EXAMPLES : Build only GPIO applications
+    - BUILD_PMP_EXAMPLES : Build only PMP applications
+    - BUILD_SDCARD_EXAMPLES : Build only SDCARD Applications
+  * DRIVERS (will automagically build for applications above)
+    - BUILD_DRV_UART : Xilinx UART Lite driver
+    - BUILD_DRV_GPIO : Xilinx GPIO driver
+    - BUILD_DRV_SDCARD : SDCARD SPI driver
 
-To turn on codec2 for example:
-  - cmake ../ -DBUILD_CODEC2_EXAMPLES=ON
+  * UTILITIES (will automagically build for applications above)
+    - BUILD_UTIL_FATFS : Open Source FATFS file system driver for embedded systems.
+
+To turn on UART for example:
+  - cmake ../ -DBUILD_UART_EXAMPLES=ON
